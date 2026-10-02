@@ -97,9 +97,9 @@ $hiddenImports = @(
   'api.v1.endpoints.history',
   'api.v1.endpoints.stocks',
   'api.v1.endpoints.health',
-  'api.v1.endpoints.screening',
-  'src.services.screening',
-  'src.services.screening.pipeline',
+  'api.v1.endpoints.',
+  'src.services.',
+  'src.services..pipeline',
   'api.v1.schemas',
   'api.v1.schemas.analysis',
   'api.v1.schemas.history',
@@ -111,7 +111,7 @@ $hiddenImports = @(
   'src.services.task_queue',
   'src.services.analysis_service',
   'src.services.history_service',
-  'src.services.screening_service',
+  'src.services._service',
   'uvicorn.logging',
   'uvicorn.loops',
   'uvicorn.loops.auto',
@@ -139,10 +139,16 @@ $pyInstallerArgs = @(
   '--collect-data', 'litellm',
   '--collect-data', 'tiktoken',
   '--collect-data', 'akshare',
-  '--collect-all', 'src.services.screening',
+  '--collect-all', 'src.services.',
   '--collect-all', 'futu'
 )
 $pyInstallerArgs += $hiddenImportArgs
+$pyInstallerArgs += '--collect-all'
+$pyInstallerArgs += 'src.services.screening'
+$pyInstallerArgs += '--collect-all'
+$pyInstallerArgs += 'futu'
+$pyInstallerArgs += '--add-data'
+$pyInstallerArgs += 'src/services/screening/strategies;src/services/screening/strategies'
 $pyInstallerArgs += 'main.py'
 
 Write-Host "Running: $pythonBin $($pyInstallerArgs -join ' ')"
@@ -232,3 +238,4 @@ if ($packagedScreeningStrategyCount -ne $sourceScreeningStrategyCount) {
 }
 
 Write-Host 'Backend build completed.'
+
